@@ -27,6 +27,7 @@
 #include "FastGlobalRegistration.h"
 
 #include <ctime>
+#include <iostream>
 
 #include <Open3D/Geometry/PointCloud.h>
 #include <Open3D/Geometry/KDTreeFlann.h>
@@ -357,6 +358,14 @@ RegistrationResult FastGlobalRegistration(
             NormalizePointCloud(point_cloud_vec, option);
     std::vector<std::pair<int, int>> corres;
     corres = AdvancedMatching(point_cloud_vec, features_vec, option);
+
+    if (option.with_constraint_) {
+      for (size_t i = 0; i < point_cloud_vec.size(); i++) {
+          for (size_t j = 0; j < point_cloud_vec[i].points_.size(); j++) {
+              point_cloud_vec[i].points_[j][2] = 0.0;
+          }
+      }
+    }
     Eigen::Matrix4d transformation;
     transformation = OptimizePairwiseRegistration(point_cloud_vec, corres,
                                                   scale_global, option);

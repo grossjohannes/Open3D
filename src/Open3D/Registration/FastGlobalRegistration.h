@@ -45,14 +45,16 @@ class RegistrationResult;
 
 class FastGlobalRegistrationOption {
 public:
-    FastGlobalRegistrationOption(double division_factor = 1.4,
+    FastGlobalRegistrationOption(bool with_constraint = false,
+                                 double division_factor = 1.4,
                                  bool use_absolute_scale = false,
                                  bool decrease_mu = true,
                                  double maximum_correspondence_distance = 0.025,
                                  int iteration_number = 64,
                                  double tuple_scale = 0.95,
                                  int maximum_tuple_count = 1000)
-        : division_factor_(division_factor),
+        : with_constraint_(with_constraint),
+          division_factor_(division_factor),
           use_absolute_scale_(use_absolute_scale),
           decrease_mu_(decrease_mu),
           maximum_correspondence_distance_(maximum_correspondence_distance),
@@ -62,6 +64,7 @@ public:
     ~FastGlobalRegistrationOption() {}
 
 public:
+    bool with_constraint_;
     // Division factor used for graduated non-convexity
     double division_factor_;
     // Measure distance in absolute scale (1) or in scale relative to the

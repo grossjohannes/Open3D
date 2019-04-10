@@ -199,11 +199,11 @@ void pybind_registration_classes(py::module &m) {
                    "distance.");
     py::detail::bind_copy_functions<
             registration::TransformationEstimationPointToPoint>(te_p2p);
-    te_p2p.def(py::init([](bool with_scaling) {
+    te_p2p.def(py::init([](bool with_constraint, bool with_scaling) {
                    return new registration::
                            TransformationEstimationPointToPoint(with_scaling);
                }),
-               "with_scaling"_a = false)
+               "with_scaling"_a = false, "with_constraint"_a = false)
             .def("__repr__",
                  [](const registration::TransformationEstimationPointToPoint
                             &te) {
@@ -380,7 +380,7 @@ must hold true for all edges.)");
     py::detail::bind_copy_functions<registration::FastGlobalRegistrationOption>(
             fgr_option);
     fgr_option
-            .def(py::init([](double division_factor, bool use_absolute_scale,
+            .def(py::init([](bool with_constraint, double division_factor, bool use_absolute_scale,
                              bool decrease_mu,
                              double maximum_correspondence_distance,
                              int iteration_number, double tuple_scale,
@@ -390,7 +390,7 @@ must hold true for all edges.)");
                              maximum_correspondence_distance, iteration_number,
                              tuple_scale, maximum_tuple_count);
                  }),
-                 "division_factor"_a = 1.4, "use_absolute_scale"_a = false,
+                 "division_factor"_a = 1.4, "with_constraint"_a = false, "use_absolute_scale"_a = false,
                  "decrease_mu"_a = false,
                  "maximum_correspondence_distance"_a = 0.025,
                  "iteration_number"_a = 64, "tuple_scale"_a = 0.95,
